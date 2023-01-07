@@ -1,0 +1,4 @@
+local/
+*.sqlite*
+__pycache__/
+readme.txt
