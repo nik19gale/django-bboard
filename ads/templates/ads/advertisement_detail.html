@@ -4,9 +4,22 @@
 
 {% block header %}{{ advertisement.subject|capfirst }}{% endblock header %}
 
+{% block top-menu-left %}
+<div class="navbar-item">
+    <div class="buttons">
+        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' advertisement.id %}">Edit</a>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="ad_id" value="{{ advertisement.id }}">
+            <input class="button is-danger is-light" type="submit" value="Delete">
+        </form>
+    </div>
+</div>
+{% endblock top-menu-left %}
+
+
 {% block main %}
-<a href="{% url 'advertisement_edit' advertisement.id %}"><button class="button">Edit</button></a><a href=""><button class="button">Delete</button></a>
-<ul>
+<ul class="block">
     <li>{{ advertisement.subject }}</li>
     <li>{{ advertisement.text }}</li>
     <li>{{ advertisement.cost }}</li>

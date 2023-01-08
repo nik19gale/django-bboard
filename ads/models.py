@@ -33,7 +33,7 @@ class Advertisement(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey('Category', on_delete=models.SET_DEFAULT, default=None)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, default=None)
 
     class Meta:
         verbose_name = "Advertisement"

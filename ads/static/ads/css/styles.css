@@ -3,12 +3,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-header {
-    min-height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 footer {
     min-height: 75px;
     display: grid;
@@ -31,12 +25,10 @@ footer nav .next-buttons {
 }
 main {
     flex: 1;
-    display: grid;
-    grid-template-rows: 50px auto;
 }
-.ads-list {
+/* .ads-list {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     justify-content: center;
-}
+} */

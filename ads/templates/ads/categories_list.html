@@ -4,23 +4,26 @@
 
 {% block header %}Categories List{% endblock header %}
 
-{% block main %}
-<div class="navbar">
-    <a href="{% url 'category_add' %}"><button class="button">Add category</button></a>
+{% block top-menu-left %}
+<div class="navbar-item">
+    <div class="buttons">
+        <a href="{% url 'ads:category_add' %}" class="button is-primary is-light add-cat-button">Add category</a>
+    </div>
 </div>
+{% endblock top-menu-left %}
+
+{% block main %}
 {% for cat in cats %}
-<div class="box">
-    <div>
-        <h2 class="sub-title"><a href="{% url 'advertisements_list' cat_name=cat.name page=1 %}">{{ cat.name }}</a></h2>
-    </div>
-    <div>
-        {{ cat.advertisement_set.count }} ads
-    </div>
-    <div>
-        <a href="{% url 'category_edit' cat.name %}"><button class="button">Edit</button></a>
-    </div>
-    <div>
-        <a href=""><button class="button">Delete</button></a>
+<div class="cat-block block">
+    <div class="cat-title"><a href="{% url 'ads:advertisements_list' cat_name=cat.name page=1 %}"><h2>{{ cat.name }}</h2></a></div>
+    <div class="cat-count">{{ cat.advertisement_set.count }} ads</div>
+    <div class="buttons">
+        <a class="button is-warning is-light" href="{% url 'ads:category_edit' cat.name %}">Edit</a>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="category" value="{{ cat.id }}">
+            <input class="button is-danger is-light" type="submit" value="Delete">
+        </form>
     </div>
 </div>
 {% endfor %}

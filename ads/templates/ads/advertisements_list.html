@@ -4,11 +4,26 @@
 
 {% block header %}Advertisements List{% endblock header %}
 
-{% block main %}
-<a href="{% url 'advertisement_add' %}"><button class="button">Add advertisement</button></a>
-<div class="ads-list">
-    {% for ad in object_list %}
-    <p><a href="{% url 'advertisement_detail' ad_id=ad.id %}">{{ ad.subject }}</a><a href="{% url 'advertisement_edit' ad.id %}"><button class="button">Edit</button></a><a href=""><button class="button">Delete</button></a></p>
-    {% endfor %}
+{% block top-menu-left %}
+<div class="navbar-item">
+    <div class="buttons">
+        <a href="{% url 'ads:advertisement_add' cat_name %}" class="button is-primary is-light add-ad-button">Add advertisement</a>
+    </div>
 </div>
+{% endblock top-menu-left %}
+
+{% block main %}
+{% for ad in object_list %}
+<div class="ad-block block">
+    <div class="ad-title"><a href="{% url 'ads:advertisement_detail' ad_id=ad.id %}">{{ ad.subject }}</a></div>
+    <div class="buttons">
+        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad.id %}">Edit</a>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="ad_id" value="{{ ad.id }}">
+            <input class="button is-danger is-light" type="submit" value="Delete">
+        </form>
+    </div>
+</div>
+{% endfor %}
 {% endblock main %}

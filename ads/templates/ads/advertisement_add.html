@@ -3,3 +3,21 @@
 {% block title %}Add advertisement{% endblock title %}
 
 {% block header %}Add advertisement{% endblock header %}
+
+{% block main %}
+<form method="post">
+    {% csrf_token %}
+    <label for="subject">Subject</label>
+    <input type="text" name="subject" id="subject">
+
+    <label for="text">Text</label>
+    <textarea name="text" id="text" cols="30" rows="10"></textarea>
+
+    <label for="cost">Cost</label>
+    <input type="number" name="cost" id="cost" step="0.01" min="0.01">
+
+    <input type="hidden" name="category" value="{{ cat.id }}">
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock main %}
