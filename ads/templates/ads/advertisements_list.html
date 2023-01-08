@@ -1,0 +1,14 @@
+{% extends 'ads/layout/base.html' %}
+
+{% block title %}Advertisements List{% endblock title %}
+
+{% block header %}Advertisements List{% endblock header %}
+
+{% block main %}
+<a href="{% url 'advertisement_add' %}"><button class="button">Add advertisement</button></a>
+<div class="ads-list">
+    {% for ad in object_list %}
+    <p><a href="{% url 'advertisement_detail' ad_id=ad.id %}">{{ ad.subject }}</a><a href="{% url 'advertisement_edit' ad.id %}"><button class="button">Edit</button></a><a href=""><button class="button">Delete</button></a></p>
+    {% endfor %}
+</div>
+{% endblock main %}

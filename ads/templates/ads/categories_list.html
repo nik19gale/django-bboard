@@ -1,0 +1,27 @@
+{% extends 'ads/layout/base.html' %}
+
+{% block title %}Categories List{% endblock title %}
+
+{% block header %}Categories List{% endblock header %}
+
+{% block main %}
+<div class="navbar">
+    <a href="{% url 'category_add' %}"><button class="button">Add category</button></a>
+</div>
+{% for cat in cats %}
+<div class="box">
+    <div>
+        <h2 class="sub-title"><a href="{% url 'advertisements_list' cat_name=cat.name page=1 %}">{{ cat.name }}</a></h2>
+    </div>
+    <div>
+        {{ cat.advertisement_set.count }} ads
+    </div>
+    <div>
+        <a href="{% url 'category_edit' cat.name %}"><button class="button">Edit</button></a>
+    </div>
+    <div>
+        <a href=""><button class="button">Delete</button></a>
+    </div>
+</div>
+{% endfor %}
+{% endblock main %}

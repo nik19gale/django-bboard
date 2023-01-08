@@ -1,0 +1,42 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header {
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+footer {
+    min-height: 75px;
+    display: grid;
+    align-items: center;
+}
+footer nav {
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    gap: 10px;
+    align-items: center;
+}
+footer nav .prev-buttons {
+    justify-self: end;
+}
+footer nav .pages {
+    justify-self: center;
+}
+footer nav .next-buttons {
+    justify-self: start;
+}
+main {
+    flex: 1;
+    display: grid;
+    grid-template-rows: 50px auto;
+}
+.ads-list {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+}

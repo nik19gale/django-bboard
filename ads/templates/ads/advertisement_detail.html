@@ -1,0 +1,14 @@
+{% extends 'ads/layout/base.html' %}
+
+{% block title %}Advertisement{% endblock title %}
+
+{% block header %}{{ advertisement.subject|capfirst }}{% endblock header %}
+
+{% block main %}
+<a href="{% url 'advertisement_edit' advertisement.id %}"><button class="button">Edit</button></a><a href=""><button class="button">Delete</button></a>
+<ul>
+    <li>{{ advertisement.subject }}</li>
+    <li>{{ advertisement.text }}</li>
+    <li>{{ advertisement.cost }}</li>
+</ul>
+{% endblock main %}
