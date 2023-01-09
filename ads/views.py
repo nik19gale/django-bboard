@@ -25,7 +25,7 @@ class CategoriesList(ListView):
 
 class AdvertisementsList(ListView):
     template_name = 'ads/advertisements_list.html'
-    paginate_by = 5
+    paginate_by = 4
     page_kwarg = 'page'
 
     def get_queryset(self):
@@ -55,7 +55,7 @@ class AdvertisementDetail(DetailView):
         ad = Advertisement.objects.get(id=request.POST['ad_id'])
         cat = ad.category.name
         ad.delete()
-        return redirect(reverse_lazy('ads:advertisements_list', kwargs={'cat_name': cat, 'page': 1}))
+        return redirect(reverse_lazy('ads:advertisements_list', kwargs={'cat_name': cat}))
 
 
 class HomePage(TemplateView):
@@ -103,7 +103,7 @@ class AddAdvertisementForm(CreateView):
 
     def get_success_url(self):
         cat_name = self.kwargs['cat_name']
-        return reverse_lazy('ads:advertisements_list', kwargs={'cat_name': cat_name, 'page': 1})
+        return reverse_lazy('ads:advertisements_list', kwargs={'cat_name': cat_name})
 
 
 class EditAdvertisementForm(UpdateView):
@@ -121,4 +121,6 @@ class EditAdvertisementForm(UpdateView):
 
     def get_success_url(self):
         ad_id = self.kwargs['ad_id']
-        return reverse_lazy('ads:advertisement_detail', kwargs={'ad_id': ad_id})
+        ad = Advertisement.objects.get(id=self.kwargs['ad_id'])
+        cat_name = ad.category
+        return reverse_lazy('ads:advertisement_detail', kwargs={'ad_id': ad_id, 'cat_name':cat_name})

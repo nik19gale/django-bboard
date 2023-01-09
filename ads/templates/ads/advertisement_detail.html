@@ -7,7 +7,7 @@
 {% block top-menu-left %}
 <div class="navbar-item">
     <div class="buttons">
-        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' advertisement.id %}">Edit</a>
+        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad_id=advertisement.id cat_name=advertisement.category.name %}">Edit</a>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="ad_id" value="{{ advertisement.id }}">
@@ -19,9 +19,22 @@
 
 
 {% block main %}
-<ul class="block">
-    <li>{{ advertisement.subject }}</li>
-    <li>{{ advertisement.text }}</li>
-    <li>{{ advertisement.cost }}</li>
-</ul>
+<div class="card p-3">
+    <div class="card-header">
+        <div class="title card-header-title">
+            {{ advertisement.subject }}
+        </div>
+    </div>
+    <div class="card-content p-4">
+        {{ advertisement.text }}
+    </div>
+    <div class="card-footer p-4">
+        <div class="card-footer-item has-text-primary">
+            {{ advertisement.cost }}
+        </div>
+        <div class="card-footer-item">
+            {{ advertisement.created }}
+        </div>
+    </div>
+</div>
 {% endblock main %}

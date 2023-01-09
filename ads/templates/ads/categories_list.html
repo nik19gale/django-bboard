@@ -14,9 +14,10 @@
 
 {% block main %}
 {% for cat in cats %}
-<div class="cat-block block">
-    <div class="cat-title"><a href="{% url 'ads:advertisements_list' cat_name=cat.name page=1 %}"><h2>{{ cat.name }}</h2></a></div>
-    <div class="cat-count">{{ cat.advertisement_set.count }} ads</div>
+<div class="cat-block box">
+    <div class="cat-title subtitle"><a href="{% url 'ads:advertisements_list' cat_name=cat.name %}?page=1"><h2>{{ cat.name }}</h2></a></div>
+    <div class="cat-desc content">{{ cat.desc }}</div>
+    <div class="cat-count content has-text-danger-light has-background-dark p-2">{{ cat.advertisement_set.count }} ads</div>
     <div class="buttons">
         <a class="button is-warning is-light" href="{% url 'ads:category_edit' cat.name %}">Edit</a>
         <form method="post">

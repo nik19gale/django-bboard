@@ -2,22 +2,39 @@
 
 {% block title %}Edit advertisement{% endblock title %}
 
-{% block header %}Edit advertisement {{ad_id}}{% endblock header %}
+{% block header %}Edit advertisement {{ advertisement.subject }}{% endblock header %}
 
 {% block main %}
-<form method="post">
+<form method="post" class="p-6">
     {% csrf_token %}
-    <label for="subject">Subject</label>
-    <input type="text" name="subject" id="subject" value="{{ advertisement.subject }}">
 
-    <label for="text">Text</label>
-    <textarea name="text" id="text" cols="30" rows="10">{{ advertisement.text }}</textarea>
+    <div class="field">
+        <label class="label" for="subject">Subject</label>
+        <div class="control">
+            <input class="input" type="text" name="subject" id="subject" value="{{ advertisement.subject }}">
+        </div>
+    </div>
 
-    <label for="cost">Cost</label>
-    <input type="number" name="cost" id="cost" step="0.01" min="0.01" value="{{ advertisement.cost }}">
+    <div class="field">
+        <label class="label" for="text">Text</label>
+        <div class="control">
+            <textarea class="textarea" name="text" id="text" cols="30" rows="10">{{ advertisement.text }}</textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="cost">Cost</label>
+        <div class="control">
+            <input class="input" type="number" name="cost" id="cost" step="0.01" min="0.01" value="{{ advertisement.cost }}">
+        </div>
+    </div>
 
     <input type="hidden" name="category" value="{{ advertisement.category.id }}" readonly>
 
-    <input type="submit" value="Submit">
+    <div class="field">
+        <div class="control">
+            <input class="button is-primary" type="submit" value="Submit">
+        </div>
+    </div>
 </form>
 {% endblock main %}

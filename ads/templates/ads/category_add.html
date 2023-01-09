@@ -5,14 +5,27 @@
 {% block header %}Add category{% endblock header %}
 
 {% block main %}
-<form method="post">
+<form method="post" class="p-6">
     {% csrf_token %}
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name">
 
-    <label for="desc">Description</label>
-    <textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+    <div class="field">
+        <label class="label" for="name">Name</label>
+        <div class="control">
+            <input class="input" type="text" name="name" id="name">
+        </div>
+    </div>
 
-    <input type="submit" value="Submit">
+    <div class="field">
+        <label class="label" for="desc">Description</label>
+        <div class="control">
+            <textarea class="textarea" name="desc" id="desc" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <input class="button is-primary" type="submit" value="Submit">
+        </div>
+    </div>
 </form>
 {% endblock main %}

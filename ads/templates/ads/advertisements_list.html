@@ -14,10 +14,11 @@
 
 {% block main %}
 {% for ad in object_list %}
-<div class="ad-block block">
-    <div class="ad-title"><a href="{% url 'ads:advertisement_detail' ad_id=ad.id %}">{{ ad.subject }}</a></div>
+<div class="ad-block box">
+    <div class="ad-title subtitle"><a href="{% url 'ads:advertisement_detail' cat_name=cat_name ad_id=ad.id %}">{{ ad.subject }}</a></div>
+    <div class="ad-cost content has-background-primary has-text-white p-1">{{ ad.cost }}</div>
     <div class="buttons">
-        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad.id %}">Edit</a>
+        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad_id=ad.id cat_name=cat_name %}">Edit</a>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="ad_id" value="{{ ad.id }}">
