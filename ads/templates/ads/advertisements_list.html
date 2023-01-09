@@ -1,13 +1,13 @@
 {% extends 'ads/layout/base.html' %}
 
-{% block title %}Advertisements List{% endblock title %}
+{% block title %}{{ current_category }}{% endblock title %}
 
-{% block header %}Advertisements List{% endblock header %}
+{% block header %}Category {{ current_category }}{% endblock header %}
 
 {% block top-menu-left %}
 <div class="navbar-item">
     <div class="buttons">
-        <a href="{% url 'ads:advertisement_add' cat_name %}" class="button is-primary is-light add-ad-button">Add advertisement</a>
+        <a href="{% url 'ads:advertisement_add' current_category %}" class="button is-primary is-light add-ad-button">Add advertisement</a>
     </div>
 </div>
 {% endblock top-menu-left %}
@@ -15,10 +15,10 @@
 {% block main %}
 {% for ad in object_list %}
 <div class="ad-block box">
-    <div class="ad-title subtitle"><a href="{% url 'ads:advertisement_detail' cat_name=cat_name ad_id=ad.id %}">{{ ad.subject }}</a></div>
+    <div class="ad-title subtitle"><a href="{% url 'ads:advertisement_detail' category=current_category ad_id=ad.id %}">{{ ad.subject }}</a></div>
     <div class="ad-cost content has-background-primary has-text-white p-1">{{ ad.cost }}</div>
     <div class="buttons">
-        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad_id=ad.id cat_name=cat_name %}">Edit</a>
+        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad_id=ad.id category=current_category %}">Edit</a>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="ad_id" value="{{ ad.id }}">
@@ -28,3 +28,28 @@
 </div>
 {% endfor %}
 {% endblock main %}
+{% block footer %}
+<footer>
+    {% if page_obj %}
+    <nav class="bottom-menu">
+        <div class="prev-buttons">
+            {% if page_obj.has_previous %}
+            <a href="{% url 'ads:advertisements_list' category=current_category %}?page=1"><button class="button is-black">To the begining</button></a>
+            <a href="{% url 'ads:advertisements_list' category=current_category %}?page={{ page_obj.previous_page_number }}"><button class="button is-dark">Back</button></a>
+            {% endif %}
+        </div>
+        <div class="pages">
+            {% if page_obj.paginator.num_pages > 1 %}
+            {{ page_obj.number }} out of {{ page_obj.paginator.num_pages }}
+            {% endif %}
+        </div>
+        <div class="next-buttons">
+            {% if page_obj.has_next %}
+            <a href="{% url 'ads:advertisements_list' category=current_category %}?page={{ page_obj.next_page_number }}"><button class="button is-dark">Forward</button></a>
+            <a href="{% url 'ads:advertisements_list' category=current_category %}?page={{ page_obj.paginator.num_pages }}"><button class="button is-black">To the end</button></a>
+            {% endif %}
+        </div>
+    </nav>
+    {% endif %}
+</footer>
+{% endblock footer %}

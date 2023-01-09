@@ -35,30 +35,26 @@
         </nav>
     </header>
     <main>
-        {% block main %}{% endblock main %}
-    </main>
-    <footer>
-        {% if page_obj %}
-        <nav class="bottom-menu">
-            <div class="prev-buttons">
-                {% if page_obj.has_previous %}
-                <a href="{% url 'ads:advertisements_list' cat_name=cat_name %}?page=1"><button class="button is-black">To the begining</button></a>
-                <a href="{% url 'ads:advertisements_list' cat_name=cat_name %}?page={{ page_obj.previous_page_number }}"><button class="button is-dark">Back</button></a>
+        <aside class="menu">
+        {% block navigator %}
+        <nav>
+            <a class="menu-label button is-black has-text-white mt-4" href="{% url 'ads:categories_list' %}"><h2>Main&nbsp;Page</h2></a>
+            <ul class="menu-list">
+                {% for cat in navigator.categories %}
+                {% if current_category == cat.name %}
+                <a class="navigator-link has-text-light has-background-grey" href="{% url 'ads:advertisements_list' cat.name %}"><li>{{ cat.name|capfirst }}</li></a>
+                {% else %}
+                <a class="navigator-link has-text-black" href="{% url 'ads:advertisements_list' cat.name %}"><li>{{ cat.name|capfirst }}</li></a>
                 {% endif %}
-            </div>
-            <div class="pages">
-                {% if page_obj.paginator.num_pages > 1 %}
-                {{ page_obj.number }} out of {{ page_obj.paginator.num_pages }}
-                {% endif %}
-            </div>
-            <div class="next-buttons">
-                {% if page_obj.has_next %}
-                <a href="{% url 'ads:advertisements_list' cat_name=cat_name %}?page={{ page_obj.next_page_number }}"><button class="button is-dark">Forward</button></a>
-                <a href="{% url 'ads:advertisements_list' cat_name=cat_name %}?page={{ page_obj.paginator.num_pages }}"><button class="button is-black">To the end</button></a>
-                {% endif %}
-            </div>
+                {% endfor %}
+            </ul>
         </nav>
-        {% endif %}
-    </footer>
+        {% endblock navigator %}
+        </aside>
+        <article>
+            {% block main %}{% endblock main %}
+        </article>
+    </main>
+    {% block footer %}{% endblock footer %}
 </body>
 </html>

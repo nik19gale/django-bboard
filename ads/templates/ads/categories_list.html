@@ -1,8 +1,8 @@
 {% extends 'ads/layout/base.html' %}
 
-{% block title %}Categories List{% endblock title %}
+{% block title %}Categories{% endblock title %}
 
-{% block header %}Categories List{% endblock header %}
+{% block header %}Categories{% endblock header %}
 
 {% block top-menu-left %}
 <div class="navbar-item">
@@ -15,7 +15,7 @@
 {% block main %}
 {% for cat in cats %}
 <div class="cat-block box">
-    <div class="cat-title subtitle"><a href="{% url 'ads:advertisements_list' cat_name=cat.name %}?page=1"><h2>{{ cat.name }}</h2></a></div>
+    <div class="cat-title subtitle"><a href="{% url 'ads:advertisements_list' category=cat.name %}?page=1"><h2>{{ cat.name }}</h2></a></div>
     <div class="cat-desc content">{{ cat.desc }}</div>
     <div class="cat-count content has-text-danger-light has-background-dark p-2">{{ cat.advertisement_set.count }} ads</div>
     <div class="buttons">

@@ -29,13 +29,13 @@ class AdvertisementsList(ListView):
     page_kwarg = 'page'
 
     def get_queryset(self):
-        cat_name = Category.objects.get(name=self.kwargs['cat_name'])
+        cat_name = Category.objects.get(name=self.kwargs['category'])
         return Advertisement.objects.filter(category=cat_name).order_by('-updated')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ads'] = self.get_queryset()
-        context['cat_name'] = self.kwargs['cat_name']
+        context['current_category'] = self.kwargs['category']
         return context
 
     def post(self, request, *args, **kwargs):
@@ -51,11 +51,18 @@ class AdvertisementDetail(DetailView):
     query_pk_and_slug = True
     template_name = 'ads/advertisement_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ad = Advertisement.objects.get(id=self.kwargs['ad_id'])
+        cat = Category.objects.get(name=ad.category)
+        context['current_category'] = cat.name
+        return context
+
     def post(self, request, *args, **kwargs):
         ad = Advertisement.objects.get(id=request.POST['ad_id'])
         cat = ad.category.name
         ad.delete()
-        return redirect(reverse_lazy('ads:advertisements_list', kwargs={'cat_name': cat}))
+        return redirect(reverse_lazy('ads:advertisements_list', kwargs={'category': cat}))
 
 
 class HomePage(TemplateView):
@@ -80,9 +87,14 @@ class EditCategoryForm(UpdateView):
         'name',
         'desc',
     ]
-    slug_url_kwarg = 'cat_name'
+    slug_url_kwarg = 'category'
     slug_field = 'name'
     query_pk_and_slug = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_category'] = self.kwargs['category']
+        return context
 
 
 class AddAdvertisementForm(CreateView):
@@ -97,13 +109,14 @@ class AddAdvertisementForm(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        cat = Category.objects.get(name=self.kwargs['cat_name'])
+        cat = Category.objects.get(name=self.kwargs['category'])
         context['cat'] = cat
+        context['current_category'] = cat.name
         return context
 
     def get_success_url(self):
-        cat_name = self.kwargs['cat_name']
-        return reverse_lazy('ads:advertisements_list', kwargs={'cat_name': cat_name})
+        cat_name = self.kwargs['category']
+        return reverse_lazy('ads:advertisements_list', kwargs={'category': cat_name})
 
 
 class EditAdvertisementForm(UpdateView):
@@ -123,4 +136,11 @@ class EditAdvertisementForm(UpdateView):
         ad_id = self.kwargs['ad_id']
         ad = Advertisement.objects.get(id=self.kwargs['ad_id'])
         cat_name = ad.category
-        return reverse_lazy('ads:advertisement_detail', kwargs={'ad_id': ad_id, 'cat_name':cat_name})
+        return reverse_lazy('ads:advertisement_detail', kwargs={'ad_id': ad_id, 'category':cat_name})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ad = Advertisement.objects.get(id=self.kwargs['ad_id'])
+        cat = Category.objects.get(name=ad.category)
+        context['current_category'] = cat.name
+        return context

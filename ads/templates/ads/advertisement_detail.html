@@ -1,13 +1,13 @@
 {% extends 'ads/layout/base.html' %}
 
-{% block title %}Advertisement{% endblock title %}
+{% block title %}{{ advertisement.subject }}{% endblock title %}
 
 {% block header %}{{ advertisement.subject|capfirst }}{% endblock header %}
 
 {% block top-menu-left %}
 <div class="navbar-item">
     <div class="buttons">
-        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad_id=advertisement.id cat_name=advertisement.category.name %}">Edit</a>
+        <a class="button is-warning is-light" href="{% url 'ads:advertisement_edit' ad_id=advertisement.id category=advertisement.category.name %}">Edit</a>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="ad_id" value="{{ advertisement.id }}">

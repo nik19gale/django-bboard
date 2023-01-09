@@ -25,6 +25,26 @@ footer nav .next-buttons {
 }
 main {
     flex: 1;
+    display: grid;
+    grid-template-columns: min-content auto;
+}
+main aside {
+    grid-column: 1;
+    min-width: 10vw;
+    padding: 10px;
+    max-width: 15vw;
+}
+main aside nav {
+    width: 100%;
+}
+main aside nav .menu-label {
+    width: 100%;
+}
+.navigator-link {
+    word-wrap: break-word;
+}
+main article {
+    grid-column: 2;
 }
 /* .ads-list {
     display: grid;
